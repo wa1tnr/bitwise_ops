@@ -65,6 +65,7 @@ void setup(void) {
     delay(7000); // nice long delay
     example_B();
 
+    Serial.print("\r\n\r\n END. "); // let them know there is no more.
     while(true) {
     // do nothing
     }
