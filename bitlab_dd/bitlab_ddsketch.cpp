@@ -1,6 +1,12 @@
 // Sat 14 Jul 19:49:03 UTC 2018
 // bitlab_ddsketch.cpp
 
+/* Charley Shattuck's
+
+   Tiny interpreter,
+   similar to myforth's Standalone Interpreter
+   This example code is in the public domain */
+
 // was:
 // bitlab_cc.ino
 
@@ -14,9 +20,8 @@
 
 void setup(void) {
     Serial.begin(9600);
-    while(!Serial) {
-        // do nothing
-    }
+    while (!Serial);
+    Serial.println ("Forth-like interpreter:");
 
     Serial.println("Test message - signon.");
     Serial.println("\r\n // bitlab_dd.ino ");
