@@ -1,4 +1,4 @@
-// Sat 14 Jul 05:48:51 UTC 2018
+// Sat 14 Jul 05:52:08 UTC 2018
 // bitlab_bb.ino
 
 // target MCU: Adafruit Feather M0 Express
@@ -31,8 +31,8 @@ void example_A(void) {
 }
 
 void example_B(void) {
-    int x = 3;
-    int n = 2;
+    int x = 3; // seed value, our 'interesting number' to be modified
+    int n = 5; // powers of two -- how many places to the left we bit-shift 'x'
     int a = 0; // accumulator stand-in
 
     Serial.println("\r\n Example B:\r\n");
