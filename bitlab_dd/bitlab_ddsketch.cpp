@@ -23,10 +23,17 @@ const byte maxtib = 16;
 char tib[maxtib];
 
 byte pos;
+char ch;
+
+void kludge_report_a(void) { // scaffolding - will go away
+    Serial.print(ch); Serial.print(" . ");
+}
 
 /* Incrementally read command line from serial port */
 byte reading(void) {
-    delay(3000); Serial.print(" . "); // temporary; slow program to human speed
+  if (!Serial.available()) return 1;
+  ch = Serial.read();
+  kludge_report_a(); // scaffolding - will go away
 }
 
 /* Block on reading the command line from serial port */
