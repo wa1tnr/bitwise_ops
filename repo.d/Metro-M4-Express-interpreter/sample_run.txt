@@ -1,0 +1,40 @@
+Script started on Sun 17 Jun 2018 03:41:23 UTC
+
+ $ microcom -s 19200 -p /dev/ttyACM0
+connected to /dev/ttyACM0
+Escape character: Ctrl-\
+Type the escape character followed by c to get to the menu or q to quit
+Forth-like interpreter:
+nop speed dump wiggle input_pullup output input in low high delay .h . .sh .s clearstack negate invert xor or and + over swap back dup drop entries ' words xxt EXECUTE execxt execadrs xt>adrs xt>word throw   
+8528  ok
+.s 8528 0 0 0 0 0 0 0  ok
+dump 
+2150    91  2 95  1  9  1 b1  2 c0  0  0  0 41 64 61 66   ............Adaf
+2160    72 75 69 74 20 49 6e 64 75 73 74 72 69 65 73  0   ruit Industries.
+2170    49 74 73 79 42 69 74 73 79 20 4d 34 20 45 78 70   ItsyBitsy M4 Exp
+2180    72 65 73 73  0  0  0  0  0  0  0  0 5c 21  0  0   ress........\!..
+2190    70 21  0  0 e0  3  0 20 eb 3c 90 55 46 32 20 55   p!..... .<.UF2 U
+21a0    46 32 20  0  2  1  1  0  2 40  0 3e 1f f8 20  0   F2 ......@.>.. .
+21b0     1  0  1  0  0  0  0  0  0  0  0  0  0  0 29 42   ..............)B
+21c0     0 42  0 49 54 53 59 4d 34 42 4f 4f 54  0 46 41   .B.ITSYM4BOOT.FA
+21d0    54 31 36 20 20 20  0  0 3c 21 64 6f 63 74 79 70   T16   ..<!doctyp
+21e0    65 20 68 74 6d 6c 3e  a 3c 68 74 6d 6c 3e 3c 62   e html>.<html><b
+21f0    6f 64 79 3e 3c 73 63 72 69 70 74 3e  a 6c 6f 63   ody><script>.loc
+2200    61 74 69 6f 6e 2e 72 65 70 6c 61 63 65 28 22 68   ation.replace("h
+2210    74 74 70 3a 2f 2f 61 64 61 66 72 75 2e 69 74 2f   ttp://adafru.it/
+2220    22 29 3b  a 3c 2f 73 63 72 69 70 74 3e 3c 2f 62   ");.</script></b
+2230    6f 64 79 3e 3c 2f 68 74 6d 6c 3e  a  0  0  0  0   ody></html>.....
+2240    49 4e 46 4f 5f 55 46 32 54 58 54  0 70 22  0  0   INFO_UF2TXT.p".. ok
+13  ok
+222 speed  ok
+.s 13 8784 0 0 0 0 0 222  ok
+13 wiggle  ok
+111 speed 13 wiggle  ok
+44 speed 13 wiggle  ok
+5 3 + . 8  ok
+7 7 + . 14  ok
+121 21 negate + . 100  ok
+
+[reset target]
+
+Script done on Sun 17 Jun 2018 03:50:42 UTC
