@@ -1,4 +1,4 @@
-// Sat 14 Jul 19:49:03 UTC 2018
+// Sat 14 Jul 20:21:17 UTC 2018
 // bitlab_ddsketch.cpp
 
 /* Charley Shattuck's
@@ -18,6 +18,11 @@
 #include <Arduino.h>
 #include "bitlab_ddsketch.h"
 
+/* Block on reading the command line from serial port */
+/* then echo each word */
+void readword() {
+}
+
 void setup(void) {
     Serial.begin(9600);
     while (!Serial);
@@ -35,5 +40,6 @@ void setup(void) {
 
 void loop(void) {
     Serial.println("Line C.");
+    readword();
 }
 
