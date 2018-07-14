@@ -1,4 +1,4 @@
-// Sat 14 Jul 06:09:22 UTC 2018
+// Sat 14 Jul 06:20:24 UTC 2018
 // bitlab_cc.ino
 
 // target MCU: Adafruit Feather M0 Express
@@ -14,7 +14,9 @@ void example_A_bins(void) {
     Serial.println("\r\n Example A:\r\n");
 
     Serial.print("  x = ");
-    Serial.println(x);
+    Serial.print(x);
+
+    Serial.println("         0000 0011");
 
     Serial.print("  n = ");
     Serial.println(n);
@@ -27,7 +29,9 @@ void example_A_bins(void) {
     // Serial.println("  <--- suppressed operation ");
 
     Serial.print("  a = ");
-    Serial.println(a);
+    Serial.print(a);
+
+    Serial.println("        0000 1100");
 }
 
 void example_B_bins(void) {
