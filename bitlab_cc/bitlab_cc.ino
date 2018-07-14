@@ -1,10 +1,13 @@
-// Sat 14 Jul 06:47:15 UTC 2018
+// Sat 14 Jul 17:44:04 UTC 2018
 // bitlab_cc.ino
 
 // target MCU: Adafruit Feather M0 Express
 
 // any SAMD21 (M0+) or SAMD51 (M4) MCU will work; probably
 // AVR's as well.
+
+// previous timestamp:
+// Sat 14 Jul 06:47:15 UTC 2018
 
 void example_A_bins(void) {
     int x = 3;
