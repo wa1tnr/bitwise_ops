@@ -1,4 +1,4 @@
-// Sat 14 Jul 05:33:47 UTC 2018
+// Sat 14 Jul 05:48:51 UTC 2018
 // bitlab_bb.ino
 
 // target MCU: Adafruit Feather M0 Express
@@ -30,6 +30,30 @@ void example_A(void) {
     Serial.println(a);
 }
 
+void example_B(void) {
+    int x = 3;
+    int n = 2;
+    int a = 0; // accumulator stand-in
+
+    Serial.println("\r\n Example B:\r\n");
+
+    Serial.print("  x = ");
+    Serial.println(x);
+
+    Serial.print("  n = ");
+    Serial.println(n);
+
+    a = x << n;
+
+    Serial.println("");
+
+    Serial.println("  a = x << n");
+    // Serial.println("  <--- suppressed operation ");
+
+    Serial.print("  a = ");
+    Serial.println(a);
+}
+
 void setup(void) {
     Serial.begin(9600);
     while(!Serial) {
@@ -38,6 +62,8 @@ void setup(void) {
 
     Serial.println("\r\n // bitlab_bb.ino ");
     example_A();
+    delay(7000); // nice long delay
+    example_B();
 
     while(true) {
     // do nothing
