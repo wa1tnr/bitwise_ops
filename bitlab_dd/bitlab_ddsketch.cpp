@@ -1,4 +1,4 @@
-// Sat 14 Jul 20:21:17 UTC 2018
+// Sat 14 Jul 21:44:53 UTC 2018
 // bitlab_ddsketch.cpp
 
 /* Charley Shattuck's
@@ -26,6 +26,14 @@ byte pos;
 char ch;
 
 void kludge_report_a(void) { // scaffolding - will go away
+  if (ch == '\r') {
+      Serial.print("\r\n"); // echo
+  } else {
+      delay(80); Serial.print(ch); // temporary; slow program to human speed
+  }
+}
+
+void xkludge_report_a(void) { // renamed - to place outside program
     Serial.print(ch); Serial.print(" . ");
 }
 
@@ -54,7 +62,7 @@ void setup(void) {
 }
 
 void loop(void) {
-    Serial.println("Line C.");
+    Serial.println("Line C - type something:");
     readword();
 }
 
