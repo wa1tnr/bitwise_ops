@@ -18,9 +18,18 @@
 #include <Arduino.h>
 #include "bitlab_ddsketch.h"
 
+/* Terminal Input Buffer for interpreter */
+const byte maxtib = 16;
+char tib[maxtib];
+
+byte pos;
+
 /* Block on reading the command line from serial port */
 /* then echo each word */
 void readword() {
+    pos = 0;
+    tib[0] = 0;
+    // while (reading());
 }
 
 void setup(void) {
