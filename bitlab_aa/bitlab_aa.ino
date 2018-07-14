@@ -16,8 +16,16 @@ void setup(void) {
         // do nothing
     }
     Serial.println("\r\n Example A:\r\n");
+
+    Serial.println("");
+
+    while(true) {
+    // do nothing
+    }
+    Serial.println("Line B."); // never reached
 }
 
 void loop(void) {
+    Serial.println("Line C.");
 }
 
