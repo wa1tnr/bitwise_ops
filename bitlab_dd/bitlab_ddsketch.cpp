@@ -1,4 +1,4 @@
-// Sat 14 Jul 21:44:53 UTC 2018
+// Sat 14 Jul 22:00:15 UTC 2018
 // bitlab_ddsketch.cpp
 
 /* Charley Shattuck's
@@ -18,6 +18,8 @@
 #include <Arduino.h>
 #include "bitlab_ddsketch.h"
 
+int crlfstate = 0; // differentiate when ascii 13 is entered to the terminal
+
 /* Terminal Input Buffer for interpreter */
 const byte maxtib = 16;
 char tib[maxtib];
@@ -25,11 +27,20 @@ char tib[maxtib];
 byte pos;
 char ch;
 
+void ok(void) {
+  if (crlfstate == -1) {
+    Serial.print(" ok\r\n");
+    crlfstate = 0;
+  }
+}
+
 void kludge_report_a(void) { // scaffolding - will go away
-  if (ch == '\r') {
-      Serial.print("\r\n"); // echo
+    if (ch == '\r') {
+        crlfstate = -1; // set flag, CR/LF keystroke registered
+        ok();
   } else {
       delay(80); Serial.print(ch); // temporary; slow program to human speed
+      // Serial.print("ELSE seen.");
   }
 }
 
