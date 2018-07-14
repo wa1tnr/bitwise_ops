@@ -1,4 +1,4 @@
-// Sat 14 Jul 06:20:24 UTC 2018
+// Sat 14 Jul 06:24:11 UTC 2018
 // bitlab_cc.ino
 
 // target MCU: Adafruit Feather M0 Express
@@ -26,7 +26,6 @@ void example_A_bins(void) {
     Serial.println("");
 
     Serial.println("  a = x << n");
-    // Serial.println("  <--- suppressed operation ");
 
     Serial.print("  a = ");
     Serial.print(a);
@@ -39,10 +38,13 @@ void example_B_bins(void) {
     int n = 5; // powers of two -- how many places to the left we bit-shift 'x'
     int a = 0; // accumulator stand-in
 
-    Serial.println("\r\n Example B:\r\n");
+    Serial.println("\r\n                   7    6    5    4    3    2    1    0");
+    Serial.println(" Example B:      128   64   32   16    8    4    2    1\r\n");
 
     Serial.print("  x = ");
-    Serial.println(x);
+    Serial.print(x);
+
+    Serial.println("         0000 0011");
 
     Serial.print("  n = ");
     Serial.println(n);
@@ -52,10 +54,11 @@ void example_B_bins(void) {
     Serial.println("");
 
     Serial.println("  a = x << n");
-    // Serial.println("  <--- suppressed operation ");
 
     Serial.print("  a = ");
-    Serial.println(a);
+    Serial.print(a);
+
+    Serial.println("        0110 0000");
 }
 
 void setup(void) {
