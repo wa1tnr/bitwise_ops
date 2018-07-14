@@ -7,19 +7,9 @@
 // AVR's as well.
 
 void example_A(void) {
-}
-
-void setup(void) {
     int x = 3;
     int n = 2;
     int a = 0; // accumulator stand-in
-
-    Serial.begin(9600);
-    while(!Serial) {
-        // do nothing
-    }
-    Serial.println("\r\n // bitlab_bb.ino ");
-    example_A();
 
     Serial.println("\r\n Example A:\r\n");
 
@@ -38,7 +28,16 @@ void setup(void) {
 
     Serial.print("  a = ");
     Serial.println(a);
+}
 
+void setup(void) {
+    Serial.begin(9600);
+    while(!Serial) {
+        // do nothing
+    }
+
+    Serial.println("\r\n // bitlab_bb.ino ");
+    example_A();
 
     while(true) {
     // do nothing
