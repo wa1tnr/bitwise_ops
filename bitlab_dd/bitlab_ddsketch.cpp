@@ -44,14 +44,6 @@ void setup(void) {
 
     Serial.println("Test message - signon.");
     Serial.println("\r\n // bitlab_dd.ino ");
-/*
-    Serial.print("\r\n\r\n END. "); // let them know there is no more.
-
-    while(true) {
-    // do nothing
-    }
-    Serial.println("Line B."); // never reached
-*/
 }
 
 void loop(void) {
