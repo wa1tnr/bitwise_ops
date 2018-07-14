@@ -6,6 +6,9 @@
 // any SAMD21 (M0+) or SAMD51 (M4) MCU will work; probably
 // AVR's as well.
 
+void example_A(void) {
+}
+
 void setup(void) {
     int x = 3;
     int n = 2;
