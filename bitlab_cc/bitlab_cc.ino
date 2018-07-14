@@ -1,4 +1,4 @@
-// Sat 14 Jul 06:24:11 UTC 2018
+// Sat 14 Jul 06:47:15 UTC 2018
 // bitlab_cc.ino
 
 // target MCU: Adafruit Feather M0 Express
@@ -38,8 +38,10 @@ void example_B_bins(void) {
     int n = 5; // powers of two -- how many places to the left we bit-shift 'x'
     int a = 0; // accumulator stand-in
 
-    Serial.println("\r\n                   7    6    5    4    3    2    1    0");
-    Serial.println(" Example B:      128   64   32   16    8    4    2    1\r\n");
+    Serial.println("\r\n");
+    Serial.println("                              7    6    5    4      3    2    1    0");
+    Serial.println("                            128   64   32   16      8    4    2    1\r\n");
+    Serial.println(" Example B: \r\n");
 
     Serial.print("  x = ");
     Serial.print(x);
