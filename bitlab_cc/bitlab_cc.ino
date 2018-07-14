@@ -1,4 +1,4 @@
-// Sat 14 Jul 06:06:47 UTC 2018
+// Sat 14 Jul 06:09:22 UTC 2018
 // bitlab_cc.ino
 
 // target MCU: Adafruit Feather M0 Express
@@ -6,7 +6,7 @@
 // any SAMD21 (M0+) or SAMD51 (M4) MCU will work; probably
 // AVR's as well.
 
-void example_A(void) {
+void example_A_bins(void) {
     int x = 3;
     int n = 2;
     int a = 0; // accumulator stand-in
@@ -30,7 +30,7 @@ void example_A(void) {
     Serial.println(a);
 }
 
-void example_B(void) {
+void example_B_bins(void) {
     int x = 3; // seed value, our 'interesting number' to be modified
     int n = 5; // powers of two -- how many places to the left we bit-shift 'x'
     int a = 0; // accumulator stand-in
@@ -61,9 +61,9 @@ void setup(void) {
     }
 
     Serial.println("\r\n // bitlab_cc.ino ");
-    example_A();
+    example_A_bins();
     delay(7000); // nice long delay
-    example_B();
+    example_B_bins();
 
     Serial.print("\r\n\r\n END. "); // let them know there is no more.
     while(true) {
