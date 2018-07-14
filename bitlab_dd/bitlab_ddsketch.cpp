@@ -24,12 +24,16 @@ char tib[maxtib];
 
 byte pos;
 
+/* Incrementally read command line from serial port */
+byte reading(void) {
+}
+
 /* Block on reading the command line from serial port */
 /* then echo each word */
 void readword() {
     pos = 0;
     tib[0] = 0;
-    // while (reading());
+    while (reading());
 }
 
 void setup(void) {
