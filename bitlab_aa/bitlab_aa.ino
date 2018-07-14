@@ -1,4 +1,4 @@
-// Sat 14 Jul 04:47:39 UTC 2018
+// Sat 14 Jul 04:55:53 UTC 2018
 // bitlab_aa.ino
 
 // target MCU: Adafruit Feather M0 Express
@@ -16,6 +16,12 @@ void setup(void) {
         // do nothing
     }
     Serial.println("\r\n Example A:\r\n");
+
+    Serial.print("  x = ");
+    Serial.println(x);
+
+    Serial.print("  n = ");
+    Serial.println(n);
 
     Serial.println("");
 
