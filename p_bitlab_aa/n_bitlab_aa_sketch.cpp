@@ -1,11 +1,8 @@
 // n_bitlab_aa_sketch.cpp
 
-// Sat Jul 17 12:17:13 UTC 2021
+// Sat Jul 17 15:01:18 UTC 2021
 
 #include <Arduino.h>
-
-void init_serial(void) {
-}
 
 #define QUICK_LED_BLINKS       5 // how many initial LED blinks
 #define QUICK_INTER_BLINK    600 // was 200 ms now 600 ms OFF time
@@ -48,17 +45,51 @@ void blink(void) {
     delayed(); // delay(500);
 }
 
+void init_serial(void) {
+    Serial.begin(9600);
+    while(!Serial) {
+        blink();
+    }
+    delay(900);
+    Serial.println(" init_serial();");
+    Serial.println(" .. has met with success.  Target board ready.");
+}
+
 void setup(void) {
     // gpio serial init
     init_gpio();
     quick_led_check();
-    blink();
+    init_serial();
 }
+
+void rhythm_b(void) {
+    Serial.print("*");
+    cpl(LED_BUILTIN);
+    delay(100);
+    cpl(LED_BUILTIN);
+    delay(1000);
+}
+
+void rhythm_c(void) {
+    Serial.print(".");
+    cpl(LED_BUILTIN); delay(5);
+    cpl(LED_BUILTIN); delay(400);
+    Serial.print(".");
+    cpl(LED_BUILTIN); delay(20);
+    cpl(LED_BUILTIN); delay(4400);
+
+}
+
+int counted_loops = 12;
 
 void loop(void) {
-    blink();
+    if (counted_loops > 0) {
+        counted_loops--;
+        rhythm_b();
+    }
+    if (counted_loops == 0) {
+        rhythm_c();
+    }
 }
-
-// compiles as-is. ;)
 
 // END.
