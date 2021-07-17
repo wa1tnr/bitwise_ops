@@ -4,9 +4,23 @@
 
 #include <Arduino.h>
 
-void setup(void) { }
+void init_serial(void) {
+}
 
-void loop(void) { }
+void init_gpio(void) {
+}
+
+void blink(void) {
+    delay(500);
+}
+
+void setup(void) {
+    // gpio serial init
+}
+
+void loop(void) {
+    blink();
+}
 
 // compiles as-is. ;)
 
