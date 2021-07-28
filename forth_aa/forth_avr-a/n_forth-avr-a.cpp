@@ -1,10 +1,17 @@
-#define DATESTAMP "Wed Jul 28 18:22:26 UTC 2021"
+#define DATESTAMP "Wed Jul 28 20:15:35 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
    Charley's example code is in the public domain */
 
 #include <Arduino.h>
+
+/* Terminal Input Buffer for interpreter */
+// const byte maxtib = 16;
+// char tib[maxtib];
+
+// byte pos;
+// char ch;
 
 void init_gpio(void) {
     pinMode(LED_BUILTIN, 1);
@@ -35,6 +42,36 @@ void blink(void) {
     delayed(); // delay(500);
 }
 
+/* Incrementally read command line from serial port */
+byte reading() {
+  if (!Serial.available()) return 1;
+/*
+  ch = Serial.read();
+  if (ch == '\n') return 1;
+  if (ch == '\r') return 0;
+  if (ch == ' ') return 0;
+  if (pos < maxtib) {
+    tib[pos++] = ch;
+    tib[pos] = 0;
+  }
+*/
+  return 1;
+}
+
+/* Block on reading the command line from serial port */
+/* then echo each word */
+void readword() {
+/*
+  pos = 0;
+  tib[0] = 0;
+*/
+  while (reading());
+/*
+  Serial.print(tib);
+*/
+  Serial.print(" ");
+}
+
 void init_serial(void) {
     Serial.begin(115200);
     while(!Serial) { blink(); }
@@ -51,6 +88,7 @@ void loop(void) {
     Serial.print("__LED_BUILTIN__ ");
     Serial.println(wasted); // temporary - delete me soon
     Serial.println("Entering loop.  LAST message, EVER, seen.");
+    readword();
     while(-1);
     // while(0);
     delay(5000);
