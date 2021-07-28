@@ -44,37 +44,39 @@ void blink(void) {
 
 /* Incrementally read command line from serial port */
 byte reading() {
-  if (!Serial.available()) return 1;
-  ch = Serial.read();
-  Serial.print(ch); // scaffolding. Not the desired output.  temporary.
+    if (!Serial.available()) return 1;
+    ch = Serial.read();
+    Serial.print(ch); // scaffolding. Not the desired output.  temporary.
 
-  if ((ch == '\n')|| (ch == ' ')) return 0;
+    if ((ch == '\n')|| (ch == ' ')) return 0;
 
-  if (pos < maxtib) {
-    tib[pos++] = ch;
-    tib[pos] = 0;
-  }
-  return 1;
+    if (pos < maxtib) {
+        tib[pos++] = ch;
+        tib[pos] = 0;
+    }
+    return 1;
 }
 
 /* Block on reading the command line from serial port */
 /* then echo each word */
 void readword() {
 
-  pos = 0;
-  tib[0] = 0;
+    pos = 0;
+    tib[0] = 0;
 
-  while (reading());
+    while (reading());
 
-  Serial.print(tib);
+    Serial.print(tib);
 
-  Serial.print(" ");
-  Serial.println("  that was \'tib\'  for you.");
+    Serial.print(" ");
+    Serial.println("  that was \'tib\'  for you.");
 }
 
 void init_serial(void) {
     Serial.begin(115200);
-    while(!Serial) { blink(); }
+    while(!Serial) {
+        blink();
+    }
 }
 
 void setup(void) {
