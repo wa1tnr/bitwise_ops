@@ -1,0 +1,6 @@
+Wed Jul 28 17:29:22 UTC 2021
+
+Note: this code is stale - don't remember it in particular.
+
+Will be moved at some point (says 'temp' in the path, so
+that's what is planned, now, for near-future or later ;)
