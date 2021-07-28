@@ -16,11 +16,10 @@ bool pin_state;
 int wasted;
 
 void cpl(int pin) {
-    int test_del = pin;
-    wasted = test_del;
-    // pin_state = digitalRead(LED_BUILTIN);
-    // pin_state = !pin_state;
-    // digitalWrite(LED_BUILTIN, pin_state);
+    wasted = pin;
+    pin_state = digitalRead(LED_BUILTIN);
+    pin_state = !pin_state;
+    digitalWrite(LED_BUILTIN, pin_state);
 }
 
 void delayed(void) {
