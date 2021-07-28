@@ -11,7 +11,7 @@
 // char tib[maxtib];
 
 // byte pos;
-// char ch;
+char ch;
 
 void init_gpio(void) {
     pinMode(LED_BUILTIN, 1);
@@ -45,8 +45,9 @@ void blink(void) {
 /* Incrementally read command line from serial port */
 byte reading() {
   if (!Serial.available()) return 1;
-/*
   ch = Serial.read();
+  return 0; // kludge to expose this - temporary
+/*
   if (ch == '\n') return 1;
   if (ch == '\r') return 0;
   if (ch == ' ') return 0;
@@ -66,6 +67,7 @@ void readword() {
   tib[0] = 0;
 */
   while (reading());
+  Serial.print(ch); // scaffolding. Not the desired output.  temporary.
 /*
   Serial.print(tib);
 */
@@ -83,16 +85,19 @@ void setup(void) {
     delay(3000);
     Serial.println("here.");
     Serial.println(DATESTAMP);
-}
-void loop(void) {
     Serial.print("__LED_BUILTIN__ ");
     Serial.println(wasted); // temporary - delete me soon
-    Serial.println("Entering loop.  LAST message, EVER, seen.");
+}
+
+void loop(void) {
     readword();
+    // Serial.println("___ end of loop - readword() returned.");
+/*
+    Serial.println("Entering loop.  LAST message, EVER, seen.");
     while(-1);
-    // while(0);
     delay(5000);
     Serial.println("Fall-through.  ERROR.");
+*/
 }
 
 // END.
