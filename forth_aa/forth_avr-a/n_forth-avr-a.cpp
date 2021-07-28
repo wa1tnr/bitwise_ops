@@ -39,14 +39,14 @@ void delayed(void) {
 
 void blink(void) {
     cpl(LED_BUILTIN);
-    delayed(); // delay(500);
+    delayed();
 }
 
 /* Incrementally read command line from serial port */
 byte reading() {
     if (!Serial.available()) return 1;
     ch = Serial.read();
-    Serial.print(ch); // scaffolding. Not the desired output.  temporary.
+    Serial.print(ch); // keystroke echo.  OPTIONAL.
 
     if ((ch == '\n')|| (ch == ' ')) return 0;
 
@@ -54,6 +54,8 @@ byte reading() {
         tib[pos++] = ch;
         tib[pos] = 0;
     }
+    // individual, non-special compositional keystrokes
+    // fall through to here:
     return 1;
 }
 
@@ -92,12 +94,6 @@ void setup(void) {
 void loop(void) {
     readword();
     // Serial.println("___ end of loop - readword() returned.");
-/*
-    Serial.println("Entering loop.  LAST message, EVER, seen.");
-    while(-1);
-    delay(5000);
-    Serial.println("Fall-through.  ERROR.");
-*/
 }
 
 // END.
