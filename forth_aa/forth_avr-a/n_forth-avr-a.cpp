@@ -1,4 +1,4 @@
-#define DATESTAMP "Wed Jul 28 21:03:47 UTC 2021"
+#define DATESTAMP "Wed Jul 28 21:53:52 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -48,7 +48,20 @@ byte reading() {
     ch = Serial.read();
     Serial.print(ch); // keystroke echo.  OPTIONAL.
 
-    if ((ch == '\n')|| (ch == ' ')) return 0;
+    if ((ch == '\n') || (ch == ' ')) return 0;
+    if ((ch == '\010') || (ch == '\177')) { // backspace or rubout
+        if (ch == '\177') {
+            Serial.print("\010"); // 0x08
+        }
+        Serial.print(' ');
+        Serial.print("\010"); // 0x08
+        Serial.print(' ');
+        Serial.print("\010"); // 0x08
+        if (pos == 0) { return 1; }
+        tib[pos--] = 0;
+        tib[pos] = 0;
+        return 1; // continue reading keystrokes for this word's name &c.
+    } // backspace or rubout
 
     if (pos < maxtib) {
         tib[pos++] = ch;
