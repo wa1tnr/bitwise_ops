@@ -1,4 +1,4 @@
-#define DATESTAMP "Wed Jul 28 20:15:35 UTC 2021"
+#define DATESTAMP "Wed Jul 28 21:03:47 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -7,7 +7,7 @@
 #include <Arduino.h>
 
 /* Terminal Input Buffer for interpreter */
-const byte maxtib = 16;
+const byte maxtib = 64; // 16 may be more appropriate
 char tib[maxtib];
 
 byte pos;
@@ -82,7 +82,7 @@ void init_serial(void) {
 void setup(void) {
     init_gpio();
     init_serial();
-    delay(3000);
+    delay(30); // vestigal - may be removed
     Serial.println("here.");
     Serial.println(DATESTAMP);
     Serial.print("__LED_BUILTIN__ ");
