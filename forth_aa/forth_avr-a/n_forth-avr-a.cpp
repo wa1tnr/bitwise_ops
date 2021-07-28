@@ -1,4 +1,4 @@
-#define DATESTAMP "Wed Jul 28 18:17:44 UTC 2021"
+#define DATESTAMP "Wed Jul 28 18:22:26 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -24,6 +24,11 @@ void cpl(int pin) {
 }
 
 void delayed(void) {
+    if (pin_state != 0) {
+        delay(10);
+        return;
+    }
+    delay(3000); // harmless - waiting for serial
 }
 
 void blink(void) {
