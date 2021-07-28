@@ -7,10 +7,10 @@
 #include <Arduino.h>
 
 /* Terminal Input Buffer for interpreter */
-// const byte maxtib = 16;
-// char tib[maxtib];
+const byte maxtib = 16;
+char tib[maxtib];
 
-// byte pos;
+byte pos;
 char ch;
 
 void init_gpio(void) {
@@ -46,32 +46,30 @@ void blink(void) {
 byte reading() {
   if (!Serial.available()) return 1;
   ch = Serial.read();
-  return 0; // kludge to expose this - temporary
-/*
-  if (ch == '\n') return 1;
-  if (ch == '\r') return 0;
-  if (ch == ' ') return 0;
+  Serial.print(ch); // scaffolding. Not the desired output.  temporary.
+
+  if ((ch == '\n')|| (ch == ' ')) return 0;
+
   if (pos < maxtib) {
     tib[pos++] = ch;
     tib[pos] = 0;
   }
-*/
   return 1;
 }
 
 /* Block on reading the command line from serial port */
 /* then echo each word */
 void readword() {
-/*
+
   pos = 0;
   tib[0] = 0;
-*/
+
   while (reading());
-  Serial.print(ch); // scaffolding. Not the desired output.  temporary.
-/*
+
   Serial.print(tib);
-*/
+
   Serial.print(" ");
+  Serial.println("  that was \'tib\'  for you.");
 }
 
 void init_serial(void) {
