@@ -7,8 +7,9 @@ void setup(void) {
     Serial.println("here.");
 }
 void loop(void) {
-    // while(-1);
-    while(0);
+    Serial.println("Entering loop.  LAST message, EVER, seen.");
+    while(-1);
+    // while(0);
     delay(5000);
     Serial.println("Fall-through.  ERROR.");
 }
