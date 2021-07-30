@@ -52,8 +52,10 @@ int isNumber() {
   return 1;
 }
 
+#define EOL_CHAR '\n'
+
 void ok() {
-  if (ch == '\n') Serial.println("ok");
+  if (ch == EOL_CHAR) Serial.println("ok");
 }
 
 /* Incrementally read command line from serial port */
@@ -62,7 +64,7 @@ byte reading() {
     ch = Serial.read();
     Serial.print(ch); // keystroke echo.  OPTIONAL.
 
-    if ((ch == '\n') || (ch == ' ')) return 0;
+    if ((ch == EOL_CHAR) || (ch == ' ')) return 0;
     if ((ch == '\010') || (ch == '\177')) { // backspace or rubout
         if (ch == '\177') {
             Serial.print("\010"); // 0x08
