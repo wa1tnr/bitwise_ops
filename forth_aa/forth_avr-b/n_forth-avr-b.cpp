@@ -42,6 +42,20 @@ void blink(void) {
     delayed();
 }
 
+/* Is the word in tib a number? */
+int isNumber() {
+  char *endptr;
+  strtol(tib, &endptr, 0);
+  if (endptr == tib) return 0;
+  if (*endptr != '\0') return 0;
+  Serial.println("Fall-thru: isNumber() logic; it is a number.");
+  return 1;
+}
+
+void ok() {
+  if (ch == '\n') Serial.println("ok");
+}
+
 /* Incrementally read command line from serial port */
 byte reading() {
     if (!Serial.available()) return 1;
@@ -94,6 +108,9 @@ void init_serial(void) {
 }
 
 void runword(void) {
+    if (isNumber()) {
+        ok(); return;
+    }
 }
 
 void setup(void) {
