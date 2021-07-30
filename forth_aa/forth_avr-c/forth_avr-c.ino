@@ -1,5 +1,10 @@
-// Wed Jul 28 20:16:41 UTC 2021
+// Fri Jul 30 23:50:06 UTC 2021
 
 // ainsuMtxd51-exp/src  has some backspace handling foo
 
-// empty .ino file - see n_forth-avr-a.cpp sketch.
+// empty .ino file - see n_forth-avr-c.cpp sketch.
+//                                   ^
+//     (the c is replaced with another letter, later in
+//     the development cycle).
+
+// END.
