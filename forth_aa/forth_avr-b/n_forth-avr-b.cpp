@@ -40,10 +40,19 @@ int isNumber() {
   return 1;
 }
 
+int BASE;
+
 /* Convert number in tib */
 int number(void) {
     char *endptr;
-    return (int) strtol(tib, &endptr, 0);
+    if (BASE == 10) {
+        Serial.print(" in BASE 10: ");
+        return (int) strtol(tib, &endptr, 0);
+    }
+    if (BASE == 16) {
+        Serial.print(" in BASE 16: ");
+        return (int) strtol(tib, &endptr, 16);
+    }
 }
 
 #define EOL_CHAR '\n'
@@ -99,6 +108,9 @@ void readword() {
 
 void runword(void) {
     if (isNumber()) {
+        BASE = 10;
+        push(number());
+        BASE = 16;
         push(number());
         ok();
         return;
