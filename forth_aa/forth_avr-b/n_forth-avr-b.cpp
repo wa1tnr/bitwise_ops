@@ -1,4 +1,4 @@
-#define DATESTAMP "Fri Jul 30 01:59:57 UTC 2021"
+#define DATESTAMP "Fri Jul 30 02:05:38 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -28,35 +28,6 @@ void debugShowNumber(void) {
 void push(int n) {
     dW = n;
     debugShowNumber();
-}
-
-void init_gpio(void) {
-    pinMode(LED_BUILTIN, 1);
-    digitalWrite(LED_BUILTIN, 0);
-}
-
-bool pin_state;
-
-int wasted;
-
-void cpl(int pin) {
-    wasted = pin;
-    pin_state = digitalRead(LED_BUILTIN);
-    pin_state = !pin_state;
-    digitalWrite(LED_BUILTIN, pin_state);
-}
-
-void delayed(void) {
-    if (pin_state != 0) {
-        delay(10);
-        return;
-    }
-    delay(3000); // harmless - waiting for serial
-}
-
-void blink(void) {
-    cpl(LED_BUILTIN);
-    delayed();
 }
 
 /* Is the word in tib a number? */
@@ -125,18 +96,47 @@ void readword() {
     Serial.println("  that was \'tib\'  for you.");
 }
 
-void init_serial(void) {
-    Serial.begin(115200);
-    while(!Serial) {
-        blink();
-    }
-}
-
 void runword(void) {
     if (isNumber()) {
         push(number());
         ok();
         return;
+    }
+}
+
+bool pin_state;
+
+int wasted;
+
+void cpl(int pin) {
+    wasted = pin;
+    pin_state = digitalRead(LED_BUILTIN);
+    pin_state = !pin_state;
+    digitalWrite(LED_BUILTIN, pin_state);
+}
+
+void delayed(void) {
+    if (pin_state != 0) {
+        delay(10);
+        return;
+    }
+    delay(3000); // harmless - waiting for serial
+}
+
+void blink(void) {
+    cpl(LED_BUILTIN);
+    delayed();
+}
+
+void init_gpio(void) {
+    pinMode(LED_BUILTIN, 1);
+    digitalWrite(LED_BUILTIN, 0);
+}
+
+void init_serial(void) {
+    Serial.begin(115200);
+    while(!Serial) {
+        blink();
     }
 }
 
@@ -152,7 +152,6 @@ void setup(void) {
 
 void loop(void) {
     readword();
-    // Serial.println("___ mid-loop: readword() returned.");
     runword();
 }
 
