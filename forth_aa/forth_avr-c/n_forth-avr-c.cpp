@@ -1,4 +1,4 @@
-#define DATESTAMP "Fri Jul 30 03:06:20 UTC 2021"
+#define DATESTAMP "Fri Jul 30 23:37:40 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -34,6 +34,7 @@ int BASE;
 
 void triggered_binread(void) {
     BASE = 2;
+    Serial.println("DEBUG: triggered_binread() seen.");
 }
 
 /* Is the word in tib a number? */
@@ -54,9 +55,33 @@ int isNumber() {
     return 1;
 }
 
+#define TIB_LIMIT 0x7FFF // 32767 decimal
+
+bool tib_outside_limits(void) {
+    char* endptr;
+    int result;
+    result = (int) strtol(tib, &endptr, 0);
+    if (result > 0x7FFF) {
+        Serial.println("ERROR: OVER_RANGE");
+        return -1;
+    }
+    if (result < 0) {
+        Serial.println("ERROR: under zero"); // we don't handle negative numbers
+        return -1;
+    }
+    return 0;
+}
+
 /* Convert number in tib */
 int number(void) {
     char *endptr;
+    bool over_limit;
+    over_limit = tib_outside_limits();
+    if (over_limit) {
+        Serial.println("DEBUG: tib_outside_limits() result");
+        return -1; // return a minus one and skip all base conversions
+    }
+    // above is part of a sieve and its placement matters
     if (BASE ==  10) {
         Serial.print(" in BASE 10: ");
         return (int) strtol(tib, &endptr, 10);
