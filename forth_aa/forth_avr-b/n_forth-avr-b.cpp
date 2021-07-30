@@ -30,17 +30,26 @@ void push(int n) {
     debugShowNumber();
 }
 
+int BASE;
+
+void triggered_binread(void) {
+    BASE = 2;
+}
+
 /* Is the word in tib a number? */
 int isNumber() {
   char *endptr;
+  if (tib[0] == '0') {
+    if (tib[1] == 'b') {
+      triggered_binread();
+    }
+  }
   strtol(tib, &endptr, 0);
   if (endptr == tib) return 0;
   if (*endptr != '\0') return 0;
   Serial.println("Fall-thru: isNumber() logic; it is a number.");
   return 1;
 }
-
-int BASE;
 
 /* Convert number in tib */
 int number(void) {
@@ -52,6 +61,10 @@ int number(void) {
     if (BASE == 16) {
         Serial.print(" in BASE 16: ");
         return (int) strtol(tib, &endptr, 16);
+    }
+    if (BASE ==  2) {
+        Serial.print(" in BASE  2: ");
+        return (int) strtol(tib, &endptr,  2);
     }
 }
 
@@ -111,6 +124,8 @@ void runword(void) {
         BASE = 10;
         push(number());
         BASE = 16;
+        push(number());
+        BASE =  2;
         push(number());
         ok();
         return;
