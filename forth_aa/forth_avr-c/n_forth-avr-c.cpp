@@ -38,20 +38,20 @@ void triggered_binread(void) {
 
 /* Is the word in tib a number? */
 int isNumber() {
-  char *endptr;
-  if (tib[0] == '0') {
-    if (tib[1] == 'b') {
-      triggered_binread();
+    char *endptr;
+    if (tib[0] == '0') {
+        if (tib[1] == 'b') {
+            triggered_binread(); // unused hook
+        }
     }
-  }
-  strtol(tib, &endptr, BASE);
-  // if (0) {
-  if (-1) {
-    if (endptr == tib) return 0;
-    if (*endptr != '\0') return 0;
-  }
-  Serial.println("Fall-thru: isNumber() logic; it is a number.");
-  return 1;
+    strtol(tib, &endptr, BASE);
+    // if (0) {
+    if (-1) {
+        if (endptr == tib) return 0;
+        if (*endptr != '\0') return 0;
+    }
+    Serial.println("Fall-thru: isNumber() logic; it is a number.");
+    return 1;
 }
 
 /* Convert number in tib */
@@ -77,13 +77,13 @@ int number(void) {
         Serial.print(" in BASE  0: ");
         return (int) strtol(tib, &endptr,  0);
     }
-    Serial.println("ERROR in number()");
+    Serial.println("ERROR in number()"); // don't remember ever seeing this triggered
 }
 
 #define EOL_CHAR '\n'
 
 void ok() {
-  if (ch == EOL_CHAR) Serial.println("ok");
+    if (ch == EOL_CHAR) Serial.println("ok");
 }
 
 /* Incrementally read command line from serial port */
@@ -92,8 +92,12 @@ byte reading() {
     ch = Serial.read();
     Serial.print(ch); // keystroke echo.  OPTIONAL.
 
-    if (ch == EOL_CHAR) { Serial.print('\r'); } // try to do CR without LF here
-    if ((ch == EOL_CHAR) || (ch == ' ')) { return 0; }
+    if (ch == EOL_CHAR) {
+        Serial.print('\r');
+    } // try to do CR without LF here
+    if ((ch == EOL_CHAR) || (ch == ' ')) {
+        return 0;
+    }
     if ((ch == '\010') || (ch == '\177')) { // backspace or rubout
         if (ch == '\177') {
             Serial.print("\010"); // 0x08
@@ -101,7 +105,9 @@ byte reading() {
         }
         Serial.print(' ');
         Serial.print("\010"); // 0x08
-        if (pos == 0) { return 1; }
+        if (pos == 0) {
+            return 1;
+        }
         tib[pos--] = 0;
         tib[pos] = 0;
         return 1; // continue reading keystrokes for this word's name &c.
