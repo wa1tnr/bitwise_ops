@@ -1,4 +1,4 @@
-#define DATESTAMP "Fri Jul 30 02:05:38 UTC 2021"
+#define DATESTAMP "Fri Jul 30 02:11:05 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -58,7 +58,8 @@ byte reading() {
     ch = Serial.read();
     Serial.print(ch); // keystroke echo.  OPTIONAL.
 
-    if ((ch == EOL_CHAR) || (ch == ' ')) return 0;
+    if (ch == EOL_CHAR) { Serial.print('\r'); } // try to do CR without LF here
+    if ((ch == EOL_CHAR) || (ch == ' ')) { return 0; }
     if ((ch == '\010') || (ch == '\177')) { // backspace or rubout
         if (ch == '\177') {
             Serial.print("\010"); // 0x08
