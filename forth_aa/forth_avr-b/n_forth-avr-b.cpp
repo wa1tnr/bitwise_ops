@@ -1,4 +1,4 @@
-#define DATESTAMP "Fri Jul 30 01:14:49 UTC 2021"
+#define DATESTAMP "Fri Jul 30 01:59:57 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -12,6 +12,23 @@ char tib[maxtib];
 
 byte pos;
 char ch;
+
+int dW; // debug working
+
+void debugShowNumber(void) {
+    int n = dW;
+    Serial.print("n is:  0b");
+    Serial.print(n, BIN); Serial.print("  \\");
+    Serial.print(n, OCT); Serial.print("  ");
+    Serial.print(n, DEC); Serial.print("  0x");
+    Serial.print(n, HEX); Serial.println();
+}
+
+/* push n to top of data stack */
+void push(int n) {
+    dW = n;
+    debugShowNumber();
+}
 
 void init_gpio(void) {
     pinMode(LED_BUILTIN, 1);
@@ -50,6 +67,12 @@ int isNumber() {
   if (*endptr != '\0') return 0;
   Serial.println("Fall-thru: isNumber() logic; it is a number.");
   return 1;
+}
+
+/* Convert number in tib */
+int number(void) {
+    char *endptr;
+    return (int) strtol(tib, &endptr, 0);
 }
 
 #define EOL_CHAR '\n'
@@ -111,7 +134,9 @@ void init_serial(void) {
 
 void runword(void) {
     if (isNumber()) {
-        ok(); return;
+        push(number());
+        ok();
+        return;
     }
 }
 
