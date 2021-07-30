@@ -1,4 +1,4 @@
-#define DATESTAMP "Wed Jul 28 22:05:49 UTC 2021"
+#define DATESTAMP "Fri Jul 30 01:14:49 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -93,6 +93,9 @@ void init_serial(void) {
     }
 }
 
+void runword(void) {
+}
+
 void setup(void) {
     init_gpio();
     init_serial();
@@ -105,7 +108,8 @@ void setup(void) {
 
 void loop(void) {
     readword();
-    // Serial.println("___ end of loop - readword() returned.");
+    // Serial.println("___ mid-loop: readword() returned.");
+    runword();
 }
 
 // END.
