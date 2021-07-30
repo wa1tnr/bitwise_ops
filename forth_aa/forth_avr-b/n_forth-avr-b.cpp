@@ -1,4 +1,4 @@
-#define DATESTAMP "Fri Jul 30 02:11:05 UTC 2021"
+#define DATESTAMP "Fri Jul 30 03:06:20 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -44,9 +44,12 @@ int isNumber() {
       triggered_binread();
     }
   }
-  strtol(tib, &endptr, 0);
-  if (endptr == tib) return 0;
-  if (*endptr != '\0') return 0;
+  strtol(tib, &endptr, BASE);
+  // if (0) {
+  if (-1) {
+    if (endptr == tib) return 0;
+    if (*endptr != '\0') return 0;
+  }
   Serial.println("Fall-thru: isNumber() logic; it is a number.");
   return 1;
 }
@@ -54,9 +57,13 @@ int isNumber() {
 /* Convert number in tib */
 int number(void) {
     char *endptr;
-    if (BASE == 10) {
+    if (BASE ==  10) {
         Serial.print(" in BASE 10: ");
-        return (int) strtol(tib, &endptr, 0);
+        return (int) strtol(tib, &endptr, 10);
+    }
+    if (BASE ==  8) {
+        Serial.print(" in BASE  8: ");
+        return (int) strtol(tib, &endptr,  8);
     }
     if (BASE == 16) {
         Serial.print(" in BASE 16: ");
@@ -66,6 +73,11 @@ int number(void) {
         Serial.print(" in BASE  2: ");
         return (int) strtol(tib, &endptr,  2);
     }
+    if (BASE == 0) {
+        Serial.print(" in BASE  0: ");
+        return (int) strtol(tib, &endptr,  0);
+    }
+    Serial.println("ERROR in number()");
 }
 
 #define EOL_CHAR '\n'
@@ -120,16 +132,28 @@ void readword() {
 }
 
 void runword(void) {
+    BASE =  0;
     if (isNumber()) {
-        BASE = 10;
         push(number());
-        BASE = 16;
-        push(number());
-        BASE =  2;
-        push(number());
-        ok();
-        return;
     }
+    BASE = 10;
+    if (isNumber()) {
+        push(number());
+    }
+    BASE = 16;
+    if (isNumber()) {
+        push(number());
+    }
+    BASE =  8;
+    if (isNumber()) {
+        push(number());
+    }
+    BASE =  2;
+    if (isNumber()) {
+        push(number());
+    }
+    ok();
+    return;
 }
 
 bool pin_state;
