@@ -1,4 +1,4 @@
-#define DATESTAMP "Sat Jul 31 04:46:03 UTC 2021"
+#define DATESTAMP "Sat Jul 31 05:04:27 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -43,6 +43,19 @@ char namebuf[maxtib];
 byte pos;
 char ch;
 
+/* push n to top of data stack */
+void push(int n) {
+    p = (p + 1)& STKMASK;
+    TOS = n;
+}
+
+/* return top of stack */
+int pop() {
+    int n = TOS;
+    p = (p - 1)& STKMASK;
+    return n;
+}
+
 int dW; // debug working
 
 void debugShowNumber(void) {
@@ -54,11 +67,19 @@ void debugShowNumber(void) {
     Serial.print(n, HEX); Serial.println();
 }
 
-/* push n to top of data stack */
-void push(int n) {
+NAMED(_dotTOS_display, ".");
+void dot_TOS_display() {
+// void dot_s_display() {
+    dW = pop();
+    debugShowNumber();
+}
+
+/*
+void dot_push(int n) {
     dW = n;
     debugShowNumber();
 }
+*/
 
 /* End of application words */
 /* ******************************************** */
@@ -134,6 +155,7 @@ const entry dictionary[] = {
     {_decimal, decimal_base},
     {_hex, hexadecimal},
     {_octal, octal_base},
+    {_dotTOS_display, dot_TOS_display},
     {_words, words},
     {_noppp, noppp},
 };
@@ -224,23 +246,33 @@ int number(void) {
     }
     // above is part of a sieve and its placement matters
     if (BASE ==  10) {
-        Serial.print(" in BASE 10: ");
+        if (DDEBUG_LVL == 2) {
+            Serial.print(" in BASE 10: ");
+        }
         return (int) strtol(tib, &endptr, 10);
     }
     if (BASE ==  8) {
-        Serial.print(" in BASE  8: ");
+        if (DDEBUG_LVL == 2) {
+            Serial.print(" in BASE  8: ");
+        }
         return (int) strtol(tib, &endptr,  8);
     }
     if (BASE == 16) {
-        Serial.print(" in BASE 16: ");
+        if (DDEBUG_LVL == 2) {
+            Serial.print(" in BASE 16: ");
+        }
         return (int) strtol(tib, &endptr, 16);
     }
     if (BASE ==  2) {
-        Serial.print(" in BASE  2: ");
+        if (DDEBUG_LVL == 2) {
+            Serial.print(" in BASE  2: ");
+        }
         return (int) strtol(tib, &endptr,  2);
     }
     if (BASE == 0) {
-        Serial.print(" in BASE  0: ");
+        if (DDEBUG_LVL == 2) {
+            Serial.print(" in BASE  0: ");
+        }
         return (int) strtol(tib, &endptr,  0);
     }
     Serial.println("ERROR in number()"); // don't remember ever seeing this triggered
