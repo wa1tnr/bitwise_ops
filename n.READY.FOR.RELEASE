@@ -1,7 +1,7 @@
-0.1.0-pre-alpha READY.FOR.RELEASE
+0.1.1-pre-alpha READY.FOR.RELEASE
 
-last commit 1716e4121833e06046f68a14e14e6d2ffab95419
+last commit 0498c3d2779c763f0d6ef4a098e3236c8b2aa54e
 
-Date:   Wed Jul 28 18:29:54 2021 +0000
+Date:   Sat Jul 31 03:57:34 2021 +0000
 
-    define cpl() - WORKING BLINK preserial
+    Sample run - commit 65204
