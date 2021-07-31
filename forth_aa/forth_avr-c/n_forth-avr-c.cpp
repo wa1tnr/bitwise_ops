@@ -6,6 +6,21 @@
 
 #include <Arduino.h>
 
+// verbatim:
+
+/* Tiny interpreter,
+   similar to myforth's Standalone Interpreter
+   This example code is in the public domain */
+
+/* Structure of a dictionary entry */
+typedef struct {
+    const char *name;
+    void (*function)();
+} entry;
+
+/* NAMED creates a string in flash */
+#define NAMED(x, y) const char x[]=y
+
 /* Terminal Input Buffer for interpreter */
 const byte maxtib = 64; // 16 may be more appropriate
 char tib[maxtib];
@@ -29,6 +44,31 @@ void push(int n) {
     dW = n;
     debugShowNumber();
 }
+
+/* End of application words */
+/* ******************************************** */
+/* Now build the dictionary */
+
+/* empty words don't cause an error */
+NAMED(_nop, " ");
+void nop() { }
+
+/* Forward declaration required here */
+NAMED(_words, "words");
+void words();
+
+/* table of names and function addresses in flash */
+const entry dictionary[] = {
+  {_nop, nop},
+  {_words, words},
+};
+
+/* Number of words in the dictionary */
+const int entries = sizeof dictionary / sizeof dictionary[0];
+
+// words()
+// locate()
+
 
 int BASE;
 
