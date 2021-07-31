@@ -1,4 +1,4 @@
-#define DATESTAMP "Sat Jul 31 04:42:48 UTC 2021"
+#define DATESTAMP "Sat Jul 31 04:46:03 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -20,6 +20,18 @@ typedef struct {
     void (*function)();
 } entry;
 
+/* Data stack for parameter passing
+   This "stack" is circular,
+   like a Green Arrays F18A data stack,
+   so overflow and underflow are not possible
+   Number of items must be a power of 2 */
+const int STKSIZE = 8;
+const int STKMASK = 7;
+int stack[STKSIZE];
+int p = 0;
+
+/* TOS is Top Of Stack */
+#define TOS stack[p]
 /* NAMED creates a string in flash */
 #define NAMED(x, y) const char x[]=y
 
