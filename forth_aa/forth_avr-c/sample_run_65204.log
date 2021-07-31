@@ -1,0 +1,27 @@
+Terminal ready
+here.
+Sat Jul 31 03:41:20 UTC 2021
+__LED_BUILTIN__ 13
+octal    177  in BASE  8: n is:  0b1111111  \177  127  0x7F
+decimal  177  in BASE 10: n is:  0b10110001  \261  177  0xB1
+hex      177  in BASE 16: n is:  0b101110111  \567  375  0x177
+decimal  375  in BASE 10: n is:  0b101110111  \567  375  0x177
+bin      111  in BASE  2: n is:  0b111  \7  7  0x7
+bin     1111  in BASE  2: n is:  0b1111  \17  15  0xF
+bin     1111111  in BASE  2: n is:  0b1111111  \177  127  0x7F
+hex          7f  in BASE 16: n is:  0b1111111  \177  127  0x7F
+decimal     127  in BASE 10: n is:  0b1111111  \177  127  0x7F
+octal       177  in BASE  8: n is:  0b1111111  \177  127  0x7F
+auto ?
+autob      0177  in BASE  0: n is:  0b1111111  \177  127  0x7F
+autob      0x7f  in BASE  0: n is:  0b1111111  \177  127  0x7F
+autob       127  in BASE  0: n is:  0b1111111  \177  127  0x7F
+binary ?
+bin     1111111  in BASE  2: n is:  0b1111111  \177  127  0x7F
+        1011111  in BASE  2: n is:  0b1011111  \137  95  0x5F
+decimal      95  in BASE 10: n is:  0b1011111  \137  95  0x5F
+octal       137  in BASE  8: n is:  0b1011111  \137  95  0x5F
+hex          5f  in BASE 16: n is:  0b1011111  \137  95  0x5F
+autob      0137  in BASE  0: n is:  0b1011111  \137  95  0x5F
+
+END.
