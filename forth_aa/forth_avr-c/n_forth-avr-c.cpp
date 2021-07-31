@@ -1,4 +1,4 @@
-#define DATESTAMP "Sat Jul 31 03:16:43 UTC 2021"
+#define DATESTAMP "Sat Jul 31 03:22:09 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -87,12 +87,18 @@ void binary() {
     BASE = 2;
 }
 
+NAMED(_autobase, "autob");
+void auto_base() {
+    BASE = 0;
+}
+
 /* table of names and function addresses in flash */
 const entry dictionary[] = {
     {_nop_nulled, nop_nulled},
     {_nop_void, nop_void},
     {_nop, nop},
     {_nopp, nopp},
+    {_autobase, auto_base},
     {_bin, binary},
     {_words, words},
     {_noppp, noppp},
