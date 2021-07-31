@@ -1,4 +1,4 @@
-#define DATESTAMP "Fri Jul 30 23:37:40 UTC 2021"
+#define DATESTAMP "Sat Jul 31 01:14:01 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -24,7 +24,8 @@ typedef struct {
 /* Terminal Input Buffer for interpreter */
 const byte maxtib = 64; // 16 may be more appropriate
 char tib[maxtib];
-
+/* buffer required for strings read from flash */
+char namebuf[maxtib];
 byte pos;
 char ch;
 
@@ -49,27 +50,64 @@ void push(int n) {
 /* ******************************************** */
 /* Now build the dictionary */
 
+NAMED(_nop_nulled, "xjqcwk"); // unlikely string to encounter
+void nop_nulled() { }
+
 /* empty words don't cause an error */
-NAMED(_nop, " ");
+NAMED(_nop_void, ""); // not sure what to do about this one
+void nop_void() { }
+
+NAMED(_nop, "nop");
 void nop() { }
+
+NAMED(_nopp, "nopp");
+void nopp() { }
 
 /* Forward declaration required here */
 NAMED(_words, "words");
 void words();
 
+NAMED(_noppp, "noppp");
+void noppp() { }
+
 /* table of names and function addresses in flash */
 const entry dictionary[] = {
-  {_nop, nop},
-  {_words, words},
+    {_nop_nulled, nop_nulled},
+    {_nop_void, nop_void},
+    {_nop, nop},
+    {_nopp, nopp},
+    {_words, words},
+    {_noppp, noppp},
 };
 
 /* Number of words in the dictionary */
 const int entries = sizeof dictionary / sizeof dictionary[0];
 
-// words()
+/* Display all words in dictionary */
+void words() {
+    for (int i = entries - 1; i >= 2; i--) {  // was >= 0
+        strcpy(namebuf, dictionary[i].name);
+        if (namebuf[0] != ' ') {
+            if (namebuf[1] != '\0') {
+                Serial.print(namebuf);
+                Serial.print(' ');
+                // Serial.print("  debug_words  ");
+            }
+        }
+    }
+}
 
 /* Find a word in the dictionary, returning its position */
 int locate() {
+    for (int i = entries - 1; i >= 0; i--) {
+        strcpy(namebuf, dictionary[i].name);
+        if (!strcmp(tib, namebuf)) return i;
+    }
+    return 0;
+}
+
+/* Find a word in the dictionary, returning its position */
+int locate_old() {
     return 0;
 }
 
@@ -193,35 +231,34 @@ byte reading() {
 /* Block on reading the command line from serial port */
 /* then echo each word */
 void readword() {
-
     pos = 0;
     tib[0] = 0;
-
     while (reading());
-
     Serial.print(tib);
-
     Serial.print(" ");
     Serial.println("  that was \'tib\'  for you.");
 }
 
 /* Run a word via its name */
-void runword_old(void) {
-  int place = locate();
-  if (place != 0) {
-    // don't want a crash // dictionary[place].function();
-    ok();
-    return;
-  }
-  if (isNumber()) {
-    push(number());
-    ok();
-    return;
-  }
-  Serial.println("?");
+void runword(void) {
+    int place = locate();
+    Serial.print("DEBUG: locate() was: ");
+    Serial.println(place);
+    if (place != 0) {
+        dictionary[place].function();
+        ok();
+        return;
+    }
+    BASE =  0; // kludge
+    if (isNumber()) {
+        push(number());
+        ok();
+        return;
+    }
+    Serial.println("?");
 }
 
-void runword(void) {
+void runword_old(void) {
     BASE =  0;
     if (isNumber()) {
         push(number());
@@ -294,8 +331,8 @@ void setup(void) {
 
 void loop(void) {
     readword();
-    // runword();
-    runword_old();
+    runword();
+    // runword_old();
 }
 
 // END.
