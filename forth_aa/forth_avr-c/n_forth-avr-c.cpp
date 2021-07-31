@@ -67,8 +67,11 @@ const entry dictionary[] = {
 const int entries = sizeof dictionary / sizeof dictionary[0];
 
 // words()
-// locate()
 
+/* Find a word in the dictionary, returning its position */
+int locate() {
+    return 0;
+}
 
 int BASE;
 
@@ -202,6 +205,22 @@ void readword() {
     Serial.println("  that was \'tib\'  for you.");
 }
 
+/* Run a word via its name */
+void runword_old(void) {
+  int place = locate();
+  if (place != 0) {
+    // don't want a crash // dictionary[place].function();
+    ok();
+    return;
+  }
+  if (isNumber()) {
+    push(number());
+    ok();
+    return;
+  }
+  Serial.println("?");
+}
+
 void runword(void) {
     BASE =  0;
     if (isNumber()) {
@@ -275,7 +294,8 @@ void setup(void) {
 
 void loop(void) {
     readword();
-    runword();
+    // runword();
+    runword_old();
 }
 
 // END.
