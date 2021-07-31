@@ -6,6 +6,8 @@
 
 #include <Arduino.h>
 
+#define DDEBUG_LVL 0
+
 // verbatim:
 
 /* Tiny interpreter,
@@ -58,7 +60,9 @@ void nop_nulled() {
 /* empty words don't cause an error */
 NAMED(_nop_void, ""); // not sure what to do about this one
 void nop_void() {
-    Serial.print(" you said NO_SPACE yer Lordsh'p. ");
+    if (DDEBUG_LVL == 2) {
+        Serial.print(" you said NO_SPACE yer Lordsh'p. ");
+    }
 }
 
 NAMED(_nop, "nop");
@@ -158,8 +162,6 @@ void triggered_binread(void) {
     BASE = 2;
     Serial.println("DEBUG: triggered_binread() seen.");
 }
-
-#define DDEBUG_LVL 0
 
 /* Is the word in tib a number? */
 int isNumber() {
@@ -280,9 +282,9 @@ void readword() {
     pos = 0;
     tib[0] = 0;
     while (reading());
-    Serial.print(tib);
-    Serial.print(" ");
     if (DDEBUG_LVL == 2) {
+        Serial.print(tib);
+        Serial.print(" ");
         Serial.println("  that was \'tib\'  for you.");
     }
 }
@@ -294,7 +296,7 @@ void runword(void) {
         Serial.print("DEBUG: locate() was: ");
         Serial.print(place);
     }
-    // Serial.println(); // fall thru, all DDBUG_LVL 's
+    // Serial.println(); // fall thru, all DDEBUG_LVL 's
     if (place != 0) {
         dictionary[place].function();
         ok();
