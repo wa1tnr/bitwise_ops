@@ -1,4 +1,4 @@
-#define DATESTAMP "Sat Jul 31 01:14:01 UTC 2021"
+#define DATESTAMP "Sat Jul 31 01:37:48 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -51,24 +51,34 @@ void push(int n) {
 /* Now build the dictionary */
 
 NAMED(_nop_nulled, "xjqcwk"); // unlikely string to encounter
-void nop_nulled() { }
+void nop_nulled() {
+    Serial.print(" you said squawkbox, my dude. ");
+}
 
 /* empty words don't cause an error */
 NAMED(_nop_void, ""); // not sure what to do about this one
-void nop_void() { }
+void nop_void() {
+    Serial.print(" you said NO_SPACE yer Lordsh'p. ");
+}
 
 NAMED(_nop, "nop");
-void nop() { }
+void nop() {
+    Serial.print(" you said nop Cap'n. ");
+}
 
 NAMED(_nopp, "nopp");
-void nopp() { }
+void nopp() {
+    Serial.print(" you said nopp Govn'r. ");
+}
 
 /* Forward declaration required here */
 NAMED(_words, "words");
 void words();
 
 NAMED(_noppp, "noppp");
-void noppp() { }
+void noppp() {
+    Serial.print(" you said noppp Your Grace. ");
+}
 
 /* table of names and function addresses in flash */
 const entry dictionary[] = {
