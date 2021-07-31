@@ -1,4 +1,4 @@
-#define DATESTAMP "Sat Jul 31 03:34:22 UTC 2021"
+#define DATESTAMP "Sat Jul 31 03:36:30 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -97,6 +97,11 @@ void decimal_base() {
     BASE = 10;
 }
 
+NAMED(_hex, "hex");
+void hexadecimal() {
+    BASE = 16;
+}
+
 /* table of names and function addresses in flash */
 const entry dictionary[] = {
     {_nop_nulled, nop_nulled},
@@ -106,6 +111,7 @@ const entry dictionary[] = {
     {_autobase, auto_base},
     {_bin, binary},
     {_decimal, decimal_base},
+    {_hex, hexadecimal},
     {_words, words},
     {_noppp, noppp},
 };
@@ -289,9 +295,10 @@ void runword(void) {
         return;
     }
     // auto base kludge prior to all cases coded for
-    if ((BASE != -99) &&
-        (BASE != 2) &&
-        (BASE != 10)) BASE =  0; // kludge
+    if ((BASE != -99)  &&
+        (BASE !=   2)  &&
+        (BASE !=  10)  &&
+        (BASE !=  16)) BASE =  0; // kludge
 
     if (BASE == -99) BASE =  0; // more kludge
 
