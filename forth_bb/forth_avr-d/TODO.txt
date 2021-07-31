@@ -1,0 +1,8 @@
+TODO.txt
+Fri Jul 30 23:01:58 UTC 2021
+
+Wanted right away: a means to set the BASE at the command line.
+
+So this probably means implementing dictionary lookup.
+
+END.
