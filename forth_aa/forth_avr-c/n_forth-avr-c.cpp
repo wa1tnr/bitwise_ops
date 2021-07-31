@@ -1,4 +1,4 @@
-#define DATESTAMP "Sat Jul 31 03:36:30 UTC 2021"
+#define DATESTAMP "Sat Jul 31 03:41:20 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -102,6 +102,11 @@ void hexadecimal() {
     BASE = 16;
 }
 
+NAMED(_octal, "octal");
+void octal_base() {
+    BASE = 8;
+}
+
 /* table of names and function addresses in flash */
 const entry dictionary[] = {
     {_nop_nulled, nop_nulled},
@@ -112,6 +117,7 @@ const entry dictionary[] = {
     {_bin, binary},
     {_decimal, decimal_base},
     {_hex, hexadecimal},
+    {_octal, octal_base},
     {_words, words},
     {_noppp, noppp},
 };
@@ -297,6 +303,7 @@ void runword(void) {
     // auto base kludge prior to all cases coded for
     if ((BASE != -99)  &&
         (BASE !=   2)  &&
+        (BASE !=   8)  &&
         (BASE !=  10)  &&
         (BASE !=  16)) BASE =  0; // kludge
 
@@ -309,33 +316,6 @@ void runword(void) {
     }
     Serial.println("?");
 }
-
-/*
-void runword_old(void) {
-    BASE =  0;
-    if (isNumber()) {
-        push(number());
-    }
-    BASE = 10;
-    if (isNumber()) {
-        push(number());
-    }
-    BASE = 16;
-    if (isNumber()) {
-        push(number());
-    }
-    BASE =  8;
-    if (isNumber()) {
-        push(number());
-    }
-    BASE =  2;
-    if (isNumber()) {
-        push(number());
-    }
-    ok();
-    return;
-}
-*/
 
 bool pin_state;
 
