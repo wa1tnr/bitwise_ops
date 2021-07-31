@@ -1,4 +1,4 @@
-#define DATESTAMP "Sat Jul 31 01:37:48 UTC 2021"
+#define DATESTAMP "Sat Jul 31 03:16:43 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -80,12 +80,20 @@ void noppp() {
     Serial.print(" you said noppp Your Grace. ");
 }
 
+int BASE;
+
+NAMED(_bin, "bin");
+void binary() {
+    BASE = 2;
+}
+
 /* table of names and function addresses in flash */
 const entry dictionary[] = {
     {_nop_nulled, nop_nulled},
     {_nop_void, nop_void},
     {_nop, nop},
     {_nopp, nopp},
+    {_bin, binary},
     {_words, words},
     {_noppp, noppp},
 };
@@ -121,12 +129,13 @@ int locate_old() {
     return 0;
 }
 
-int BASE;
 
 void triggered_binread(void) {
     BASE = 2;
     Serial.println("DEBUG: triggered_binread() seen.");
 }
+
+#define DDEBUG_LVL 0
 
 /* Is the word in tib a number? */
 int isNumber() {
@@ -142,7 +151,9 @@ int isNumber() {
         if (endptr == tib) return 0;
         if (*endptr != '\0') return 0;
     }
-    Serial.println("Fall-thru: isNumber() logic; it is a number.");
+    if (DDEBUG_LVL == 2) {
+        Serial.println("Fall-thru: isNumber() logic; it is a number.");
+    }
     return 1;
 }
 
@@ -151,7 +162,8 @@ int isNumber() {
 bool tib_outside_limits(void) {
     char* endptr;
     int result;
-    result = (int) strtol(tib, &endptr, 0);
+    // result = (int) strtol(tib, &endptr, 0);
+    result = (int) strtol(tib, &endptr, BASE);
     if (result > 0x7FFF) {
         Serial.println("ERROR: OVER_RANGE");
         return -1;
@@ -246,20 +258,28 @@ void readword() {
     while (reading());
     Serial.print(tib);
     Serial.print(" ");
-    Serial.println("  that was \'tib\'  for you.");
+    if (DDEBUG_LVL == 2) {
+        Serial.println("  that was \'tib\'  for you.");
+    }
 }
 
 /* Run a word via its name */
 void runword(void) {
     int place = locate();
-    Serial.print("DEBUG: locate() was: ");
-    Serial.println(place);
+    if (DDEBUG_LVL == 2) {
+        Serial.print("DEBUG: locate() was: ");
+        Serial.print(place);
+    }
+    // Serial.println(); // fall thru, all DDBUG_LVL 's
     if (place != 0) {
         dictionary[place].function();
         ok();
         return;
     }
-    BASE =  0; // kludge
+    if ((BASE != -99) &&
+        (BASE != 2)) BASE =  0; // kludge
+    if (BASE == -99) BASE =  0; // more kludge
+
     if (isNumber()) {
         push(number());
         ok();
@@ -268,6 +288,7 @@ void runword(void) {
     Serial.println("?");
 }
 
+/*
 void runword_old(void) {
     BASE =  0;
     if (isNumber()) {
@@ -292,6 +313,7 @@ void runword_old(void) {
     ok();
     return;
 }
+*/
 
 bool pin_state;
 
@@ -337,6 +359,7 @@ void setup(void) {
     Serial.println(DATESTAMP);
     Serial.print("__LED_BUILTIN__ ");
     Serial.println(wasted); // temporary - delete me soon
+    BASE = -99;
 }
 
 void loop(void) {
