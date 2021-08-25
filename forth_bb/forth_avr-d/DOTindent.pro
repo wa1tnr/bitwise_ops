@@ -1,0 +1,13 @@
+-br
+-nfca
+-nbad -bap -nbc -bbo
+-hnl -lp -pcs -saf -sai
+-saw -nsc -nsob
+-brf
+-i4
+-npsl
+-ntac
+-nprs
+-nut
+-c4
+-cd4
