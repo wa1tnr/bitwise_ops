@@ -1,10 +1,16 @@
-#define DATESTAMP "                  Wed Aug 25 17:34:06 UTC 2021"
+#define DATESTAMP "                  Wed Aug 25 20:08:21 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
    Charley's example code is in the public domain */
 
+// swap these two to use 'cppcheck --enable=all ./thisfile.cpp'
+#define N_CPPCHECK
+#undef  N_CPPCHECK
+
+#ifndef  N_CPPCHECK
 #include <Arduino.h>
+#endif
 
 #define DDEBUG_LVL 0
 
@@ -46,7 +52,7 @@ char ch;
 /* push n to top of data stack */
 void push(int n) {
     p = (p + 1)& STKMASK;
-    TOS = n;
+     TOS = n; // variable spacing to trip up the cppcheck program
 }
 
 /* return top of stack */
@@ -187,9 +193,9 @@ int locate() {
 }
 
 /* Find a word in the dictionary, returning its position */
-int locate_old() {
-    return 0;
-}
+// int locate_old() {
+    // return 0;
+// }
 
 
 void triggered_binread(void) {
@@ -219,20 +225,25 @@ int isNumber() {
 
 #define TIB_LIMIT 0x7FFF // 32767 decimal
 
+// #define TRUE -1 // unsure
+
 bool tib_outside_limits(void) {
     char* endptr;
     int result;
     // result = (int) strtol(tib, &endptr, 0);
     result = (int) strtol(tib, &endptr, BASE);
     if (result > 0x7FFF) {
-        Serial.println("ERROR: OVER_RANGE");
-        return -1;
+        Serial.println("ERROR: OVER_RANGE"); // never prints! well, in tested cases, anyway
+        // return -1;
+        return true; // was all caps: TRUE
     }
     if (result < 0) {
         Serial.println("ERROR: under zero"); // we don't handle negative numbers
-        return -1;
+        // return -1;
+        return true;
     }
-    return 0;
+    // return 0;
+    return false;
 }
 
 /* Convert number in tib */
@@ -363,19 +374,20 @@ void runword(void) {
     Serial.println("?");
 }
 
-bool pin_state;
+bool pin_state; // is this really a bool or just an int that is equal to zero, or to one
 
 int wasted;
 
 void cpl(int pin) {
     wasted = pin;
     pin_state = digitalRead(LED_BUILTIN);
-    pin_state = !pin_state;
+    pin_state = !pin_state; // how does this interface to typing as bool or as int
     digitalWrite(LED_BUILTIN, pin_state);
 }
 
 void delayed(void) {
-    if (pin_state != 0) {
+    // if (pin_state != 0) {
+    if (pin_state != false) { // obeyed bool typing - made explicit.  mistake?
         delay(10);
         return;
     }
@@ -415,6 +427,13 @@ void loop(void) {
     runword();
     // runword_old();
 }
+
+#ifdef  N_CPPCHECK
+int main(void) {
+  setup();
+  loop();
+}
+#endif
 
 // ENiD,
 //  $ cppcheck --enable=style n_forth-avr-d.cpp
