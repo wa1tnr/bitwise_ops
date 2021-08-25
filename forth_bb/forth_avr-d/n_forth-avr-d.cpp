@@ -52,13 +52,13 @@ char ch;
 /* push n to top of data stack */
 void push(int n) {
     p = (p + 1)& STKMASK;
-     TOS = n; // variable spacing to trip up the cppcheck program
+     TOS = n; // variable spacing to trip up the gnu indent program
 }
 
 /* return top of stack */
 int pop() {
     int n = TOS;
-    p = (p - 1)& STKMASK;
+      p = (p - 1)& STKMASK; // another trip up indent program
     return n;
 }
 
