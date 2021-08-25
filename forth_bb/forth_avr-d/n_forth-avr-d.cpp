@@ -1,4 +1,4 @@
-#define DATESTAMP "Sat Jul 31 05:04:27 UTC 2021"
+#define DATESTAMP "                  Wed Aug 25 17:34:06 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -415,5 +415,11 @@ void loop(void) {
     runword();
     // runword_old();
 }
+
+// ENiD,
+//  $ cppcheck --enable=style n_forth-avr-d.cpp
+// Checking n_forth-avr-d.cpp ...
+// [n_forth-avr-d.cpp:229]: (style) Non-boolean value returned from function returning bool
+// [n_forth-avr-d.cpp:233]: (style) Non-boolean value returned from function returning bool
 
 // END.
