@@ -1,4 +1,4 @@
-#define DATESTAMP "                  Wed Aug 25 20:08:21 UTC 2021"
+#define DATESTAMP "                  Wed Aug 25 21:26:17 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -103,10 +103,9 @@ void nop_nulled () {
 /* empty words don't cause an error */
 NAMED (_nop_void, ""); // not sure what to do about this one
 void nop_void () {
-    if (DDEBUG_LVL == 2)
-      {
-	  Serial.print (" you said NO_SPACE yer Lordsh'p. ");
-      }
+    if (DDEBUG_LVL == 2) {
+        Serial.print (" you said NO_SPACE yer Lordsh'p. ");
+    }
 }
 
 NAMED (_nop, "nop");
@@ -176,29 +175,25 @@ const int entries = sizeof dictionary / sizeof dictionary[0];
 
 /* Display all words in dictionary */
 void words () {
-    for (int i = entries - 1; i >= 2; i--)
-      { // was >= 0
-	  strcpy (namebuf, dictionary[i].name);
-	  if (namebuf[0] != ' ')
-	    {
-		if (namebuf[1] != '\0')
-		  {
-		      Serial.print (namebuf);
-		      Serial.print (' ');
-		      // Serial.print("  debug_words  ");
-		  }
-	    }
-      }
+    for (int i = entries - 1; i >= 2; i--) { // was >= 0
+        strcpy (namebuf, dictionary[i].name);
+        if (namebuf[0] != ' ') {
+            if (namebuf[1] != '\0') {
+                Serial.print (namebuf);
+                Serial.print (' ');
+                // Serial.print("  debug_words  ");
+            }
+        }
+    }
 }
 
 /* Find a word in the dictionary, returning its position */
 int locate () {
-    for (int i = entries - 1; i >= 0; i--)
-      {
-	  strcpy (namebuf, dictionary[i].name);
-	  if (!strcmp (tib, namebuf))
-	      return i;
-      }
+    for (int i = entries - 1; i >= 0; i--) {
+        strcpy (namebuf, dictionary[i].name);
+        if (!strcmp (tib, namebuf))
+            return i;
+    }
     return 0;
 }
 
@@ -216,26 +211,22 @@ void triggered_binread (void) {
 /* Is the word in tib a number? */
 int isNumber () {
     char *endptr;
-    if (tib[0] == '0')
-      {
-	  if (tib[1] == 'b')
-	    {
-		triggered_binread (); // unused hook
-	    }
-      }
+    if (tib[0] == '0') {
+        if (tib[1] == 'b') {
+            triggered_binread (); // unused hook
+        }
+    }
     strtol (tib, &endptr, BASE);
     // if (0) {
-    if (-1)
-      {
-	  if (endptr == tib)
-	      return 0;
-	  if (*endptr != '\0')
-	      return 0;
-      }
-    if (DDEBUG_LVL == 2)
-      {
-	  Serial.println ("Fall-thru: isNumber() logic; it is a number.");
-      }
+    if (-1) {
+        if (endptr == tib)
+            return 0;
+        if (*endptr != '\0')
+            return 0;
+    }
+    if (DDEBUG_LVL == 2) {
+        Serial.println ("Fall-thru: isNumber() logic; it is a number.");
+    }
     return 1;
 }
 
@@ -248,18 +239,16 @@ bool tib_outside_limits (void) {
     int result;
     // result = (int) strtol(tib, &endptr, 0);
     result = (int) strtol (tib, &endptr, BASE);
-    if (result > 0x7FFF)
-      {
-	  Serial.println ("ERROR: OVER_RANGE"); // never prints! well, in tested cases, anyway
-	  // return -1;
-	  return true; // was all caps: TRUE
-      }
-    if (result < 0)
-      {
-	  Serial.println ("ERROR: under zero"); // we don't handle negative numbers
-	  // return -1;
-	  return true;
-      }
+    if (result > 0x7FFF) {
+        Serial.println ("ERROR: OVER_RANGE"); // never prints! well, in tested cases, anyway
+        // return -1;
+        return true; // was all caps: TRUE
+    }
+    if (result < 0) {
+        Serial.println ("ERROR: under zero"); // we don't handle negative numbers
+        // return -1;
+        return true;
+    }
     // return 0;
     return false;
 }
@@ -269,52 +258,41 @@ int number (void) {
     char *endptr;
     bool over_limit;
     over_limit = tib_outside_limits ();
-    if (over_limit)
-      {
-	  Serial.println ("DEBUG: tib_outside_limits() result");
-	  return -1; // return a minus one and skip all base conversions
-      }
+    if (over_limit) {
+        Serial.println ("DEBUG: tib_outside_limits() result");
+        return -1; // return a minus one and skip all base conversions
+    }
     // above is part of a sieve and its placement matters
-    if (BASE == 10)
-      {
-	  if (DDEBUG_LVL == 2)
-	    {
-		Serial.print (" in BASE 10: ");
-	    }
-	  return (int) strtol (tib, &endptr, 10);
-      }
-    if (BASE == 8)
-      {
-	  if (DDEBUG_LVL == 2)
-	    {
-		Serial.print (" in BASE  8: ");
-	    }
-	  return (int) strtol (tib, &endptr, 8);
-      }
-    if (BASE == 16)
-      {
-	  if (DDEBUG_LVL == 2)
-	    {
-		Serial.print (" in BASE 16: ");
-	    }
-	  return (int) strtol (tib, &endptr, 16);
-      }
-    if (BASE == 2)
-      {
-	  if (DDEBUG_LVL == 2)
-	    {
-		Serial.print (" in BASE  2: ");
-	    }
-	  return (int) strtol (tib, &endptr, 2);
-      }
-    if (BASE == 0)
-      {
-	  if (DDEBUG_LVL == 2)
-	    {
-		Serial.print (" in BASE  0: ");
-	    }
-	  return (int) strtol (tib, &endptr, 0);
-      }
+    if (BASE == 10) {
+        if (DDEBUG_LVL == 2) {
+            Serial.print (" in BASE 10: ");
+        }
+        return (int) strtol (tib, &endptr, 10);
+    }
+    if (BASE == 8) {
+        if (DDEBUG_LVL == 2) {
+            Serial.print (" in BASE  8: ");
+        }
+        return (int) strtol (tib, &endptr, 8);
+    }
+    if (BASE == 16) {
+        if (DDEBUG_LVL == 2) {
+            Serial.print (" in BASE 16: ");
+        }
+        return (int) strtol (tib, &endptr, 16);
+    }
+    if (BASE == 2) {
+        if (DDEBUG_LVL == 2) {
+            Serial.print (" in BASE  2: ");
+        }
+        return (int) strtol (tib, &endptr, 2);
+    }
+    if (BASE == 0) {
+        if (DDEBUG_LVL == 2) {
+            Serial.print (" in BASE  0: ");
+        }
+        return (int) strtol (tib, &endptr, 0);
+    }
     Serial.println ("ERROR in number()"); // don't remember ever seeing this triggered
 }
 
@@ -322,47 +300,41 @@ int number (void) {
 
 void ok () {
     if (ch == EOL_CHAR)
-	Serial.println ("ok");
+        Serial.println ("ok");
 }
 
 /* Incrementally read command line from serial port */
 byte reading () {
     if (!Serial.available ())
-	return 1;
+        return 1;
     ch = Serial.read ();
     Serial.print (ch); // keystroke echo.  OPTIONAL.
 
-    if (ch == EOL_CHAR)
-      {
-	  Serial.print ('\r');
-      } // try to do CR without LF here
-    if ((ch == EOL_CHAR) || (ch == ' '))
-      {
-	  return 0;
-      }
-    if ((ch == '\010') || (ch == '\177'))
-      { // backspace or rubout
-	  if (ch == '\177')
-	    {
-		Serial.print ("\010"); // 0x08
-		Serial.print (" mutt and jeff "); // 0x08
-	    }
-	  Serial.print (' ');
-	  Serial.print ("\010"); // 0x08
-	  if (pos == 0)
-	    {
-		return 1;
-	    }
-	  tib[pos--] = 0;
-	  tib[pos] = 0;
-	  return 1; // continue reading keystrokes for this word's name &c.
-      }             // backspace or rubout
+    if (ch == EOL_CHAR) {
+        Serial.print ('\r');
+    } // try to do CR without LF here
+    if ((ch == EOL_CHAR) || (ch == ' ')) {
+        return 0;
+    }
+    if ((ch == '\010') || (ch == '\177')) { // backspace or rubout
+        if (ch == '\177') {
+            Serial.print ("\010"); // 0x08
+            Serial.print (" mutt and jeff "); // 0x08
+        }
+        Serial.print (' ');
+        Serial.print ("\010"); // 0x08
+        if (pos == 0) {
+            return 1;
+        }
+        tib[pos--] = 0;
+        tib[pos] = 0;
+        return 1; // continue reading keystrokes for this word's name &c.
+    } // backspace or rubout
 
-    if (pos < maxtib)
-      {
-	  tib[pos++] = ch;
-	  tib[pos] = 0;
-      }
+    if (pos < maxtib) {
+        tib[pos++] = ch;
+        tib[pos] = 0;
+    }
     // individual, non-special compositional keystrokes
     // fall through to here:
     return 1;
@@ -374,43 +346,39 @@ void readword () {
     pos = 0;
     tib[0] = 0;
     while (reading ());
-    if (DDEBUG_LVL == 2)
-      {
-	  Serial.print (tib);
-	  Serial.print (" ");
-	  Serial.println ("  that was \'tib\'  for you.");
-      }
+    if (DDEBUG_LVL == 2) {
+        Serial.print (tib);
+        Serial.print (" ");
+        Serial.println ("  that was \'tib\'  for you.");
+    }
 }
 
 /* Run a word via its name */
 void runword (void) {
     int place = locate ();
-    if (DDEBUG_LVL == 2)
-      {
-	  Serial.print ("DEBUG: locate() was: ");
-	  Serial.print (place);
-      }
+    if (DDEBUG_LVL == 2) {
+        Serial.print ("DEBUG: locate() was: ");
+        Serial.print (place);
+    }
     // Serial.println(); // fall thru, all DDEBUG_LVL 's
-    if (place != 0)
-      {
-	  dictionary[place].function ();
-	  ok ();
-	  return;
-      }
+    if (place != 0) {
+        dictionary[place].function ();
+        ok ();
+        return;
+    }
     // auto base kludge prior to all cases coded for
     if ((BASE != -99) &&
-	(BASE != 2) && (BASE != 8) && (BASE != 10) && (BASE != 16))
-	BASE = 0; // kludge
+        (BASE != 2) && (BASE != 8) && (BASE != 10) && (BASE != 16))
+        BASE = 0; // kludge
 
     if (BASE == -99)
-	BASE = 0; // more kludge
+        BASE = 0; // more kludge
 
-    if (isNumber ())
-      {
-	  push (number ());
-	  ok ();
-	  return;
-      }
+    if (isNumber ()) {
+        push (number ());
+        ok ();
+        return;
+    }
     Serial.println ("?");
 }
 
@@ -427,11 +395,10 @@ void cpl (int pin) {
 
 void delayed (void) {
     // if (pin_state != 0) {
-    if (pin_state != false)
-      { // obeyed bool typing - made explicit.  mistake?
-	  delay (10);
-	  return;
-      }
+    if (pin_state != false) { // obeyed bool typing - made explicit.  mistake?
+        delay (10);
+        return;
+    }
     delay (3000); // harmless - waiting for serial
 }
 
@@ -447,10 +414,9 @@ void init_gpio (void) {
 
 void init_serial (void) {
     Serial.begin (115200);
-    while (!Serial)
-      {
-	  blink ();
-      }
+    while (!Serial) {
+        blink ();
+    }
 }
 
 void setup (void) {
