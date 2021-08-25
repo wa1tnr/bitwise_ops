@@ -1,4 +1,4 @@
-#define DATESTAMP "                  Wed Aug 25 21:26:17 UTC 2021"
+#define DATESTAMP "                  Wed Aug 25 21:33:39 UTC 2021"
 
 /* Includes Charley Shattuck's Tiny interpreter,
    similar to myforth's Standalone Interpreter
@@ -294,6 +294,7 @@ int number (void) {
         return (int) strtol (tib, &endptr, 0);
     }
     Serial.println ("ERROR in number()"); // don't remember ever seeing this triggered
+    return -1; // satisfy compiler - NOT HANDLED i.e. this is wrong
 }
 
 #define EOL_CHAR '\n'
