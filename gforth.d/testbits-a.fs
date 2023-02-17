@@ -1,20 +1,8 @@
 hex
 : binary ( -- ) 2 base ! ;
-( \ decimal done )
-( \ hex done )
-: octal ( -- ) 8 base ! ; ( \ 8 is legal hex for decimal 8 as well )
+: octal ( -- ) 8 base ! ;
 
 binary
-
-: give_127 1 drop ; \ rescinded
-
-: seeded ( n -- n n n n )
-  dup ( \ base 8, octal )
-  dup ( \ base 10, decimal )
-  dup ( \ base 16, hexadecimal )
-;
-
-: twospace ( -- ) space space ;
 
 decimal
 
@@ -44,7 +32,7 @@ decimal
 
 binary
 
-: prebin ( n -- ? ) \ no SED given
+: prebin
   dup set7?  dup IF ." bit 7 is set!   MSB is set! " cr drop drop exit THEN
   drop ." bit 7 is clr!   MSB is clr! " cr
 
@@ -53,7 +41,6 @@ binary
   
   dup set5?  dup IF ." bit 5 is set! " cr drop drop exit THEN
   drop ." bit 5 is clr! " cr
-
 
   dup set4?  dup IF ." bit 4 is set! " cr drop drop exit THEN
   drop ." bit 4 is clr! " cr
@@ -75,23 +62,13 @@ binary
   cr ." control reaches end of prebin.  exiting. check the stack. " cr
 ;
 
-: test ( n -- dont care)
+: test
   cr
   depth 1 < IF ." bad" EXIT THEN
   prebin
 ;
 
-: messages ( -- ) \ no SED
-  cr
-  ."   binary octal decimal hex" cr
-  twospace   ." 0b"   binary  .  \ eol
-  twospace   ."  Q"    octal  .
-  twospace   ."  D"  decimal  .
-  twospace   ." 0x"      hex  .
-  decimal
-;
-
-decimal \ interactive base very first live keystroke in interpreter
+decimal
 
 \ END
 
