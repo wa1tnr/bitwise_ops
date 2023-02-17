@@ -70,5 +70,7 @@ binary
 
 decimal
 
+."  Just type an int 0 to 255 and type test after it and press ENTER" cr cr
+."  check the stack after. " cr
 \ END
 
