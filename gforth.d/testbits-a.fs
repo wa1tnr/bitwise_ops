@@ -62,13 +62,16 @@ binary
   cr ." control reaches end of prebin.  exiting. check the stack. " cr
 ;
 
+decimal
+
 : test
-  cr
   depth 1 < IF ." bad" EXIT THEN
+  dup   0 < IF ." bad" EXIT THEN
+  dup 255 > IF ." bad" EXIT THEN
+  cr
   prebin
 ;
 
-decimal
 
 ."  Just type an int 0 to 255 and type test after it and press ENTER" cr cr
 ."  check the stack after. " cr
